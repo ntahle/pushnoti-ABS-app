@@ -3,113 +3,634 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="EDXAPAY VMC APP"/>
-    <title>EDXAPAY VMC APP</title>
-    <link rel="stylesheet" href="system/css/font.css?i=71">
+    <meta name="description" content="Intelligence Anti-Bully System Alert"/>
+    <title>Intelligence Anti-Bully System Alert</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="system/css/app.css">
     <link rel="stylesheet" href="system/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="system/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <link rel="stylesheet" href="system/css/custom.css?i=116">
-    <link rel="stylesheet" href="system/css/adminlte.min.css">
     <link rel="shortcut icon" href="images/favicon.ico" />
+    <style>
+        body {
+            --bg-soft: #fff6f1;
+            --bg-accent: #ffe9d8;
+            --card-bg: #ffffff;
+            --ink: #253046;
+            --subtle: #6b7384;
+            --line: #ebeef4;
+            --alert-border: #f79c3f;
+            --primary: #1f6feb;
+            --primary-press: #1158be;
+            --ok: #13966e;
+            --warning: #f59e0b;
+            --error: #ef4444;
+
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Montserrat", "Segoe UI", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 10% 15%, #ffffff 0%, #fff7f0 35%, transparent 60%),
+                radial-gradient(circle at 85% 0%, #ffe0c7 0%, transparent 42%),
+                linear-gradient(160deg, var(--bg-soft), var(--bg-accent));
+            padding: 14px 12px 20px;
+        }
+
+        .phone-shell {
+            width: 100%;
+            max-width: 460px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 4px 0 8px;
+            font-size: 1.25rem;
+            letter-spacing: 0.02em;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .logo-section img {
+            max-width: 120px;
+            height: auto;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            margin: 0 0 14px;
+            text-align: center;
+            font-size: 0.76rem;
+            font-weight: 500;
+            color: var(--subtle);
+        }
+
+        .connection-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.84);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 24px rgba(20, 30, 60, 0.08);
+            border-radius: 16px;
+            padding: 11px 12px;
+            position: sticky;
+            top: 10px;
+            z-index: 10;
+            margin-bottom: 14px;
+        }
+
+        .connection-bar .status {
+            margin: 0;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #2d4665;
+            text-align: center;
+            word-break: break-word;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .status-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 0.72rem;
+            line-height: 1;
+            border: 1px solid #d6deea;
+            background: #f2f5fa;
+        }
+
+        .status-chip::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #94a3b8;
+        }
+
+        .status-chip.is-online {
+            color: #0f684b;
+            border-color: #bcecd7;
+            background: #e8fbf3;
+        }
+
+        .status-chip.is-online::before {
+            background: #16a34a;
+        }
+
+        .status-chip.is-warn {
+            color: #8a5600;
+            border-color: #f7ddb1;
+            background: #fff4df;
+        }
+
+        .status-chip.is-warn::before {
+            background: #f59e0b;
+        }
+
+        .status-chip.is-offline {
+            color: #8a2b3b;
+            border-color: #f3c6ce;
+            background: #ffebef;
+        }
+
+        .status-chip.is-offline::before {
+            background: #ef4444;
+        }
+
+        .alerts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 12px;
+        }
+
+        .alert-card {
+            background: var(--card-bg);
+            border: 2px solid var(--alert-border);
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 0 12px 24px rgba(18, 25, 45, 0.1);
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .alert-card.error {
+            border-color: var(--error);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .card-icon {
+            font-size: 1.2rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .alert-content {
+            white-space: pre-line;
+            font-size: 0.84rem;
+            line-height: 1.55;
+            margin-bottom: 6px;
+        }
+
+        .alert-card .timestamp {
+            font-size: 0.73rem;
+            color: var(--subtle);
+            margin: 5px 0 10px;
+        }
+
+        .action-btn {
+            width: 100%;
+            border: 0;
+            border-radius: 10px;
+            background: var(--primary);
+            color: #ffffff;
+            padding: 10px 12px;
+            margin: 0 0 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: background 0.2s ease;
+        }
+
+        .action-btn:hover:enabled {
+            background: var(--primary-press);
+        }
+
+        .action-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .action-btn.confirm {
+            background: var(--ok);
+        }
+
+        .action-btn.confirm:hover:enabled {
+            background: #0f7956;
+        }
+
+        .event-log-dropdown {
+            margin-top: 4px;
+        }
+
+        .event-log-dropdown summary {
+            list-style: none;
+            cursor: pointer;
+            user-select: none;
+            border-radius: 14px;
+            padding: 11px 13px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid #e7eaf2;
+            box-shadow: 0 8px 18px rgba(18, 25, 45, 0.07);
+            font-weight: 700;
+            font-size: 0.86rem;
+        }
+
+        .event-log-dropdown summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .event-log-dropdown summary::after {
+            content: "\25BE";
+            float: right;
+            transition: transform 0.2s ease;
+        }
+
+        .event-log-dropdown[open] summary::after {
+            transform: rotate(180deg);
+        }
+
+        .app-card {
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            box-shadow: 0 10px 20px rgba(18, 25, 45, 0.08);
+            margin-top: 8px;
+        }
+
+        .app-card-log {
+            padding: 10px;
+        }
+
+        .history-list {
+            max-height: 260px;
+            overflow-y: auto;
+            border: 1px solid #e8ebf2;
+            border-radius: 10px;
+            background: #f8fafc;
+        }
+
+        .history-empty {
+            padding: 11px;
+            color: #80889a;
+            font-size: 0.8rem;
+            margin: 0;
+        }
+
+        .history-entry {
+            padding: 9px 10px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 0.76rem;
+            font-family: "Consolas", "Courier New", monospace;
+            word-break: break-word;
+        }
+
+        .history-entry:last-child {
+            border-bottom: none;
+        }
+
+        .history-alert {
+            background: #fff4de;
+            border-left: 3px solid #f59e0b;
+        }
+
+        .history-connection {
+            background: #e5fbf2;
+            border-left: 3px solid #10b981;
+        }
+
+        .no-alerts {
+            text-align: center;
+            color: var(--subtle);
+            font-size: 0.85rem;
+            padding: 18px 12px;
+            margin: 0;
+            border: 1px dashed #d9deea;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 480px) {
+            .phone-shell {
+                max-width: 100%;
+            }
+        }
+    </style>
 </head>
 
-<noscript><meta http-equiv="refresh" content="0; URL=badbrowser.html"></noscript>
-<body style="background-color: #000000 !important;">
-<div class="row full-height">
-    <div class="col-12 col-md-6 d-flex flex-column align-items-center justify-content-center">
-        <img src="images/logo-white.png" class="img-fluid" alt="logo" style="max-width: 150px; margin-bottom: 20px;"/>
-        <div id="dataStatus" style="color: white">
-            Incoming data go here
+<body>
+    <main class="phone-shell">
+        <h1>Intelligence Anti-Bully System Alert</h1>
+        <div class="logo-section">
+            <img src="images/logo-white.png" alt="Anti-Bully Alert Logo" />
+            <p class="description">Developed By Nursyafiq</p>
         </div>
 
+        <div class="connection-bar">
+            <p class="status" id="status">
+                <span class="status-chip is-offline">Status: Disconnected</span>
+                <span class="status-chip is-unknown">ESP32: Unknown</span>
+            </p>
+        </div>
 
+        <div class="alerts-container" id="alertsContainer">
+            <p class="no-alerts">No alerts yet.</p>
+        </div>
 
-
-    </div>
-</div>
-<div class="modal fade" id="modal-message" >
-    <div class="modal-dialog modal-dialog-centered modal-sm" >
-        <div class="modal-content" style="padding: 20px; ">
-            <div class="modal-body d-flex flex-column ">
-                <div class="text-center" id="msgarea">
-                    -
+        <details class="event-log-dropdown">
+            <summary>Event Log</summary>
+            <div class="app-card app-card-log">
+                <div id="historyList" class="history-list">
+                    <p class="history-empty">No events yet.</p>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="modal-reset" >
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content" >
-            <div class="modal-body d-flex flex-column ">
-                <div class="text-center">
-                    <div style="margin-bottom: 10px">Enter Email Address</div>
-                    <input autocomplete="off" type="text"  id="emailRecovery" class="form-control"  >
+        </details>
+    </main>
 
-                    <button onclick="submitPasswordReset()" style="margin-top: 10px" class="btn btn-primary btn-block btn-flat">Submit</button>
+    <script src="system/js/common.js?i=22"></script>
+    <script src="system/js/auth.js?i=26"></script>
+    <script src="system/js/jquery-3.7.1.min.js"></script>
+    <script src="system/js/capacitor.js"></script>
+    <script>
+        const alertsContainer = document.getElementById('alertsContainer');
+        const historyList = document.getElementById('historyList');
+        const statusElement = document.getElementById('status');
 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        let alertCardCount = 0;
+        let unacknowledgedAlertCount = 0;
+        let alarmIntervalId = null;
+        let audioContext = null;
+        let audioEnabled = false;
+        let audioHintShown = false;
 
-<script src="system/js/common.js?i=22"></script>
-<script src="system/js/auth.js?i=26"></script>
-<script src="system/js/jquery-3.7.1.min.js"></script>
-<script src="system/js/capacitor.js"></script>
-<script src="system/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="system/js/adminlte.min.js"></script>
-<script>
+        const ALERT_BEEP_REPEAT_MS = 200;
 
-
-    $(document).ready(function(){
-
-        $('#password').html('');
-        $('#email').html('');
-
-    });
-
-
-    const { PushNotifications } = Capacitor.Plugins;
-
-    window.onload = async () => {
-
-        const permission = await PushNotifications.requestPermissions();
-        if (permission.receive === 'granted') {
-            await PushNotifications.register();
-
-            PushNotifications.addListener('registration', (token) => {
-                localStorage.setItem('playerId',token.value)
-                console.log(token.value)
-            });
-
-            //USING SYSTEM NOTIFICATION
-            PushNotifications.addListener('pushNotificationReceived', (notification) => {
-
-
-                    var html = '<img src="images/duitnow.png" width="80px"><br><br>' +
-                        '<span style="font-size: larger; font-weight: bolder">' + notification.title + '</span>';
-                    $('#msgarea').html(html);
-                    $('#modal-message').modal('show');
-                    var audio = new Audio('ting.mp3');
-                    audio.play();
-
-            });
-
-        } else {
-            ($('#modal-message').modal('show'));
-            $('#msgarea').html('<i style="color: red" class="fa fa-exclamation-triangle fa-3x"></i><br><br>You will not be able to receive payment notifications. To enable, please allow notifications in your phone settings.');
+        function ensureAudioContext() {
+            if (!window.AudioContext && !window.webkitAudioContext) {
+                return null;
+            }
+            if (!audioContext) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                audioContext = new AudioContextClass();
+            }
+            return audioContext;
         }
-    };
 
+        function statusClassFromValue(value) {
+            const normalized = String(value || '').toLowerCase();
 
-</script>
-<script>
-    document.addEventListener('gesturestart', function (e) {
-        e.preventDefault();
-    });
-</script>
+            if (normalized.includes('connected') || normalized === 'online') {
+                return 'is-online';
+            }
+            if (normalized.includes('reconnect') || normalized.includes('connecting')) {
+                return 'is-warn';
+            }
+            if (normalized.includes('disconnected') || normalized === 'offline') {
+                return 'is-offline';
+            }
+            return 'is-unknown';
+        }
+
+        function renderStatus(brokerStatus, esp32Status) {
+            statusElement.innerHTML = `
+                <span class="status-chip ${statusClassFromValue(brokerStatus)}">Status: ${brokerStatus}</span>
+                <span class="status-chip ${statusClassFromValue(esp32Status)}">ESP32: ${esp32Status}</span>
+            `;
+        }
+
+        function unlockAudio() {
+            const ctx = ensureAudioContext();
+            if (!ctx) {
+                return;
+            }
+
+            if (ctx.state === 'suspended') {
+                ctx.resume();
+            }
+
+            audioEnabled = true;
+            audioHintShown = false;
+        }
+
+        function playSingleBeep(frequency, durationMs, volume = 0.2) {
+            const ctx = ensureAudioContext();
+            if (!ctx || ctx.state !== 'running') {
+                return;
+            }
+
+            const oscillator = ctx.createOscillator();
+            const gainNode = ctx.createGain();
+
+            oscillator.type = 'triangle';
+            oscillator.frequency.value = frequency;
+
+            const startTime = ctx.currentTime;
+            const endTime = startTime + durationMs / 1000;
+
+            gainNode.gain.setValueAtTime(0.0001, startTime);
+            gainNode.gain.exponentialRampToValueAtTime(volume, startTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, endTime);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(ctx.destination);
+
+            oscillator.start(startTime);
+            oscillator.stop(endTime + 0.01);
+        }
+
+        function playAlertBeep() {
+            if (!audioEnabled) {
+                if (!audioHintShown) {
+                    addHistoryEvent('alert', 'Tap or click the page once to enable alert sound');
+                    audioHintShown = true;
+                }
+                return;
+            }
+
+            const ctx = ensureAudioContext();
+            if (!ctx || ctx.state !== 'running') {
+                return;
+            }
+
+            playSingleBeep(1600, 120, 0.2);
+            setTimeout(() => playSingleBeep(1200, 120, 0.2), 150);
+            setTimeout(() => playSingleBeep(820, 160, 0.2), 300);
+        }
+
+        function startAlarmLoop() {
+            if (alarmIntervalId) {
+                return;
+            }
+
+            playAlertBeep();
+            alarmIntervalId = setInterval(() => {
+                if (unacknowledgedAlertCount <= 0) {
+                    stopAlarmLoop();
+                    return;
+                }
+                playAlertBeep();
+            }, ALERT_BEEP_REPEAT_MS);
+        }
+
+        function stopAlarmLoop() {
+            if (!alarmIntervalId) {
+                return;
+            }
+
+            clearInterval(alarmIntervalId);
+            alarmIntervalId = null;
+        }
+
+        function addHistoryEvent(type, message) {
+            const entry = document.createElement('div');
+            entry.className = `history-entry history-${type}`;
+            const timestamp = new Date().toLocaleTimeString();
+            entry.textContent = `[${timestamp}] ${message}`;
+            
+            if (historyList.querySelector('.history-empty')) {
+                historyList.innerHTML = '';
+            }
+            historyList.insertBefore(entry, historyList.firstChild);
+
+            // Keep only last 50 entries
+            while (historyList.children.length > 50) {
+                historyList.removeChild(historyList.lastChild);
+            }
+        }
+
+        function addAlertCard(data) {
+            alertCardCount++;
+            const cardType = data.status === 'error' ? 'error' : '';
+            
+            const card = document.createElement('div');
+            card.className = `alert-card ${cardType}`;
+            
+            const icon = data.status === 'error' ? 'fa-exclamation-circle' : 'fa-bell';
+            const iconColor = data.status === 'error' ? '#ef4444' : '#f59e0b';
+            
+            const header = document.createElement('div');
+            header.className = 'card-header';
+            header.innerHTML = `
+                <i class="fas ${icon} card-icon" style="color: ${iconColor}"></i>
+                <span class="card-title">${data.title || 'Bullying Alert'}</span>
+            `;
+            
+            const timestamp = document.createElement('div');
+            timestamp.className = 'timestamp';
+            timestamp.textContent = new Date().toLocaleString();
+            
+            const content = document.createElement('div');
+            content.className = 'alert-content';
+            content.textContent = data.message || 'No alert details available';
+            
+            card.appendChild(header);
+            card.appendChild(timestamp);
+            card.appendChild(content);
+
+            const btn = document.createElement('button');
+            btn.className = 'action-btn';
+            btn.textContent = 'Acknowledge Alert';
+            btn.onclick = () => {
+                btn.disabled = true;
+                btn.textContent = 'Acknowledged';
+                card.style.opacity = '0.65';
+                unacknowledgedAlertCount = Math.max(0, unacknowledgedAlertCount - 1);
+                addHistoryEvent('connection', 'Alert acknowledged by user');
+
+                if (unacknowledgedAlertCount <= 0) {
+                    stopAlarmLoop();
+                }
+            };
+            card.appendChild(btn);
+
+            if (alertsContainer.querySelector('.no-alerts')) {
+                alertsContainer.innerHTML = '';
+            }
+            alertsContainer.insertBefore(card, alertsContainer.firstChild);
+
+            // Keep only last 10 cards visible
+            while (alertsContainer.children.length > 10) {
+                alertsContainer.removeChild(alertsContainer.lastChild);
+            }
+
+            unacknowledgedAlertCount += 1;
+            addHistoryEvent('alert', data.message || 'Bullying alert received');
+            startAlarmLoop();
+        }
+
+        const { PushNotifications } = Capacitor.Plugins;
+
+        window.onload = async () => {
+            const permission = await PushNotifications.requestPermissions();
+            if (permission.receive === 'granted') {
+                await PushNotifications.register();
+                renderStatus('Connected', 'Online');
+
+                PushNotifications.addListener('registration', (token) => {
+                    localStorage.setItem('playerId', token.value);
+                    console.log('Registered with token:', token.value);
+                    addHistoryEvent('connection', 'Push notifications registered successfully');
+                });
+
+                PushNotifications.addListener('registrationError', (error) => {
+                    console.error('Registration error:', error);
+                    renderStatus('Disconnected', 'Unknown');
+                    addHistoryEvent('alert', 'Push registration error');
+                });
+
+                PushNotifications.addListener('pushNotificationReceived', (notification) => {
+                    const data = notification.data || {};
+                    addAlertCard({
+                        title: notification.title || data.title || 'Bullying Alert Detected',
+                        message: notification.body || data.body || 'Potential bullying detected by ESP32 device.',
+                        status: data.status || 'warn'
+                    });
+                    renderStatus('Connected', 'Online');
+                });
+
+                PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
+                    console.log('Notification action:', action);
+                    addHistoryEvent('connection', 'Notification opened from system tray');
+                });
+            } else {
+                addHistoryEvent('alert', 'Push notifications not enabled - check phone settings');
+                renderStatus('Disconnected', 'Unknown');
+                statusElement.innerHTML = '<span class="status-chip is-warn">Status: Notifications Disabled</span><span class="status-chip is-unknown">ESP32: Unknown</span>';
+            }
+        };
+
+        document.addEventListener('gesturestart', function (e) {
+            e.preventDefault();
+        });
+
+        // Unlock audio on first interaction so repeated beeps can play for new alerts.
+        document.addEventListener('click', unlockAudio);
+        document.addEventListener('touchstart', unlockAudio, { passive: true });
+    </script>
 </body>
 </html>
 
