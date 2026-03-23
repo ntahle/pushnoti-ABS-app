@@ -1,0 +1,13 @@
+{
+  "appId": "com.my.edxapay.vmc",
+  "appName": "Anti Bully App",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "Media": {
+      "androidGalleryMode": true
+    }
+  }
+}

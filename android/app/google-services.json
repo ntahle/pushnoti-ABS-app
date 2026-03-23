@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "228586226703",
+    "project_id": "edxapay-vmc",
+    "storage_bucket": "edxapay-vmc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:228586226703:android:7e3b4db0725f9badcc8f7a",
+        "android_client_info": {
+          "package_name": "com.my.edxapay.vmc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChapSKTzklJyvXo9o_IV1HDMfeIMfqN3w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="EDXAPAY VMC APP"/>
+    <title>EDXAPAY VMC APP</title>
+    <link rel="stylesheet" href="system/css/font.css?i=71">
+    <link rel="stylesheet" href="system/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="system/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="system/css/custom.css?i=116">
+    <link rel="stylesheet" href="system/css/adminlte.min.css">
+    <link rel="shortcut icon" href="images/favicon.ico" />
+</head>
+
+<noscript><meta http-equiv="refresh" content="0; URL=badbrowser.html"></noscript>
+<body style="background-color: #000000 !important;">
+<div class="row full-height">
+    <div class="col-12 col-md-6 d-flex flex-column align-items-center justify-content-center">
+        <img src="images/logo-white.png" class="img-fluid" alt="logo" style="max-width: 150px; margin-bottom: 20px;"/>
+        <div id="dataStatus" style="color: white">
+            Incoming data go here
+        </div>
+
+
+
+
+    </div>
+</div>
+<div class="modal fade" id="modal-message" >
+    <div class="modal-dialog modal-dialog-centered modal-sm" >
+        <div class="modal-content" style="padding: 20px; ">
+            <div class="modal-body d-flex flex-column ">
+                <div class="text-center" id="msgarea">
+                    -
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-reset" >
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content" >
+            <div class="modal-body d-flex flex-column ">
+                <div class="text-center">
+                    <div style="margin-bottom: 10px">Enter Email Address</div>
+                    <input autocomplete="off" type="text"  id="emailRecovery" class="form-control"  >
+
+                    <button onclick="submitPasswordReset()" style="margin-top: 10px" class="btn btn-primary btn-block btn-flat">Submit</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="system/js/common.js?i=22"></script>
+<script src="system/js/auth.js?i=26"></script>
+<script src="system/js/jquery-3.7.1.min.js"></script>
+<script src="system/js/capacitor.js"></script>
+<script src="system/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="system/js/adminlte.min.js"></script>
+<script>
+
+
+    $(document).ready(function(){
+
+        $('#password').html('');
+        $('#email').html('');
+
+    });
+
+
+    const { PushNotifications } = Capacitor.Plugins;
+
+    window.onload = async () => {
+
+        const permission = await PushNotifications.requestPermissions();
+        if (permission.receive === 'granted') {
+            await PushNotifications.register();
+
+            PushNotifications.addListener('registration', (token) => {
+                localStorage.setItem('playerId',token.value)
+                console.log(token.value)
+            });
+
+            //USING SYSTEM NOTIFICATION
+            PushNotifications.addListener('pushNotificationReceived', (notification) => {
+
+
+                    var html = '<img src="images/duitnow.png" width="80px"><br><br>' +
+                        '<span style="font-size: larger; font-weight: bolder">' + notification.title + '</span>';
+                    $('#msgarea').html(html);
+                    $('#modal-message').modal('show');
+                    var audio = new Audio('ting.mp3');
+                    audio.play();
+
+            });
+
+        } else {
+            ($('#modal-message').modal('show'));
+            $('#msgarea').html('<i style="color: red" class="fa fa-exclamation-triangle fa-3x"></i><br><br>You will not be able to receive payment notifications. To enable, please allow notifications in your phone settings.');
+        }
+    };
+
+
+</script>
+<script>
+    document.addEventListener('gesturestart', function (e) {
+        e.preventDefault();
+    });
+</script>
+</body>
+</html>
+
